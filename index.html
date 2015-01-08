@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ace Watch</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<meta http-equiv="cache-control" content="max-age=0" /> 
+	<meta http-equiv="cache-control" content="no-cache" /> 
+	<meta http-equiv="expires" content="0" /> 
+	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" /> 
+	<meta http-equiv="pragma" content="no-cache" /> 
+	
+	<link rel="stylesheet" href="assets/css/jquery.mobile-1.4.2.css" />
+
+	<script src="assets/js/jquery-1.10.2.min.js"></script>
+	<script src="assets/js/jquery.mobile-1.4.2.min.js"></script>
+
+<!--
+	<script src="assets/js/jquery-2.1.3.min.js"></script>
+	<script src="assets/js/jquery.mobile-1.4.5.min.js"></script>
+-->
+	<script>
+	<!--
+	var timeout=null;
+	var mdtimeout=null;
+	var	url_addr="file:///D:/workspace/AMS/ServerData.xml?";
+	var	url_addr2="file:///D:/workspace/AMS/MD.xml?";
+	//var	url_addr="http://www.aceindia.com/charts/memread_fast.php?OF=1";
+	//var	url_addr2="http://www.aceindia.com/interface/fastlistener/market_depth.php?of=1";//&symbol=COTTON11818APR14";
+	var	sortid=15;//Deafult Volume Desc
+	var sortid2=5;//Default Volume Desc
+	var prvdt;
+	var curdt;
+	var u_addr="";
+
+	$(document).ready(function()
+	{
+		$("#esrt").attr("src", "assets/img/blk.png");
+		$("#lsrt").attr("src", "assets/img/blk.png");
+		$("#csrt").attr("src", "assets/img/blk.png");
+		$("#gsrt").attr("src", "assets/img/blk.png");
+		$("#vsrt").attr("src", "assets/img/down.png");
+		$("#osrt").attr("src", "assets/img/blk.png");
+
+		$("#esrt2").attr("src", "assets/img/blk.png");
+		$("#lsrt2").attr("src", "assets/img/down.png");
+		$("#csrt2").attr("src", "assets/img/blk.png");
+		$("#gsrt2").attr("src", "assets/img/blk.png");
+
+		t=setTimeout(function() {getDataS();return;}, 500);
+
+	});
+
+	function sortdata_c()
+	{
+		$("#lsrt").attr("src", "assets/img/blk.png");
+		$("#gsrt").attr("src", "assets/img/blk.png");
+		$("#csrt").attr("src", "assets/img/blk.png");
+		$("#esrt").attr("src", "assets/img/blk.png");
+		$("#vsrt").attr("src", "assets/img/blk.png");
+		$("#osrt").attr("src", "assets/img/blk.png");
+		if(sortid==0)
+		{
+			$("#csrt").attr("src", "assets/img/down.png");
+			sortid=1;
+		}
+		else if(sortid==1)
+		{
+			$("#esrt").attr("src", "assets/img/up.png");
+			sortid=2;
+		}
+		else if(sortid==2)
+		{
+			$("#esrt").attr("src", "assets/img/down.png");
+			sortid=3;
+		}
+		else if(sortid==3)
+		{
+			$("#csrt").attr("src", "assets/img/up.png");
+			sortid=0;
+		}
+		else
+		{
+			$("#esrt").attr("src", "assets/img/up.png");
+			sortid=2;
+		}
+		getDataS();
+	}
+
+	function sortdata_l()
+	{
+		$("#lsrt").attr("src", "assets/img/blk.png");
+		$("#gsrt").attr("src", "assets/img/blk.png");
+		$("#csrt").attr("src", "assets/img/blk.png");
+		$("#esrt").attr("src", "assets/img/blk.png");
+		$("#vsrt").attr("src", "assets/img/blk.png");
+		$("#osrt").attr("src", "assets/img/blk.png");
+		if(sortid==4)
+		{
+			$("#lsrt").attr("src", "assets/img/down.png");
+			sortid=5;
+		}
+		else if(sortid==5)
+		{
+			$("#gsrt").attr("src", "assets/img/up.png");
+			sortid=8;
+		}
+		else if(sortid==8)
+		{
+			$("#gsrt").attr("src", "assets/img/down.png");
+			sortid=9;
+		}
+		else if(sortid==9)
+		{
+			$("#lsrt").attr("src", "assets/img/up.png");
+			sortid=4;
+		}
+		else
+		{
+			$("#lsrt").attr("src", "assets/img/down.png");
+			sortid=5;
+		}
+		getDataS();
+	}
+
+	function sortdata_v()
+	{
+		$("#lsrt").attr("src", "assets/img/blk.png");
+		$("#gsrt").attr("src", "assets/img/blk.png");
+		$("#csrt").attr("src", "assets/img/blk.png");
+		$("#esrt").attr("src", "assets/img/blk.png");
+		$("#vsrt").attr("src", "assets/img/blk.png");
+		$("#osrt").attr("src", "assets/img/blk.png");
+		if(sortid==14)
+		{
+			$("#vsrt").attr("src", "assets/img/down.png");
+			sortid=15;
+		}
+		else if(sortid==15)
+		{
+			$("#osrt").attr("src", "assets/img/up.png");
+			sortid=16;
+		}
+		else if(sortid==16)
+		{
+			$("#osrt").attr("src", "assets/img/down.png");
+			sortid=17;
+		}
+		else if(sortid==17)
+		{
+			$("#vsrt").attr("src", "assets/img/up.png");
+			sortid=14;
+		}
+		else
+		{
+			$("#vsrt").attr("src", "assets/img/down.png");
+			sortid=15;
+		}
+		getDataS();
+	}
+
+	function sortdata_c2()
+	{
+		$("#lsrt2").attr("src", "assets/img/blk.png");
+		$("#gsrt2").attr("src", "assets/img/blk.png");
+		$("#csrt2").attr("src", "assets/img/blk.png");
+		$("#esrt2").attr("src", "assets/img/blk.png");
+		if(sortid2==0)
+		{
+			$("#csrt2").attr("src", "assets/img/down.png");
+			sortid2=1;
+		}
+		else if(sortid2==1)
+		{
+			$("#esrt2").attr("src", "assets/img/up.png");
+			sortid2=2;
+		}
+		else if(sortid2==2)
+		{
+			$("#esrt2").attr("src", "assets/img/down.png");
+			sortid2=3;
+		}
+		else if(sortid2==3)
+		{
+			$("#csrt2").attr("src", "assets/img/up.png");
+			sortid2=0;
+		}
+		else
+		{
+			$("#esrt2").attr("src", "assets/img/up.png");
+			sortid2=2;
+		}
+		getDataS();
+	}
+
+	function sortdata_l2()
+	{
+		$("#lsrt2").attr("src", "assets/img/blk.png");
+		$("#gsrt2").attr("src", "assets/img/blk.png");
+		$("#csrt2").attr("src", "assets/img/blk.png");
+		$("#esrt2").attr("src", "assets/img/blk.png");
+		if(sortid2==4)
+		{
+			$("#lsrt2").attr("src", "assets/img/down.png");
+			sortid2=5;
+		}
+		else if(sortid2==5)
+		{
+			$("#lsrt2").attr("src", "assets/img/up.png");
+			sortid2=4;
+		}
+		else
+		{
+			$("#lsrt2").attr("src", "assets/img/down.png");
+			sortid2=5;
+		}
+		getDataS();
+	}
+
+	function sortdata_g2()
+	{
+		$("#lsrt2").attr("src", "assets/img/blk.png");
+		$("#gsrt2").attr("src", "assets/img/blk.png");
+		$("#csrt2").attr("src", "assets/img/blk.png");
+		$("#esrt2").attr("src", "assets/img/blk.png");
+		if(sortid2==9)
+		{
+			$("#gsrt2").attr("src", "assets/img/up.png");
+			sortid2=8;
+		}
+		else if(sortid2==8)
+		{
+			$("#gsrt2").attr("src", "assets/img/down.png");
+			sortid2=9;
+		}
+		else
+		{
+			$("#gsrt2").attr("src", "assets/img/up.png");
+			sortid2=8;
+		}
+		getDataS();
+	}
+
+	function showQV()
+	{
+		sortid1=5;
+		$.mobile.changePage( "#pg2", { transition: "slide"} );		
+		t=setTimeout(function() {getDataS();return;}, 100);
+	}
+
+	function showFV()
+	{
+		sortid=15;
+		$.mobile.changePage( "#pg1", { transition: "slide"} );
+		t=setTimeout(function() {getDataS();return;}, 100);
+	}
+
+	function getDataS()
+	{
+		u_addr="";
+		
+		if($.mobile.activePage.attr('id')=="pg2")
+		{
+			sortid=sortid2;
+		}
+		u_addr = url_addr+"&SO="+sortid;
+
+		$.ajax({
+		 type: "GET",
+		 url: u_addr,
+		 cache: "false",
+		 dataType: "xml",
+		 beforeSend:function(){
+		 $('#output').html('<div class="loading"><br><br><br><br><br><br><br><center><span><img src="assets/img/al.gif" alt="Loading..." /></span></center></div>');},
+		 success: parseXml
+		});
+
+	}
+
+	function getData()
+	{	
+		u_addr="";
+		if($.mobile.activePage.attr('id')=="pg2")
+		{
+			sortid=sortid2;
+		}
+		u_addr = url_addr+"&SO="+sortid;
+
+		$.ajax({
+		 type: "GET",
+		 url: u_addr,
+		 cache: "false",
+		 dataType: "xml",		
+		 success: parseXml
+		});
+	}
+
+
+	function parseXml(xml)
+	{
+		 var $row;
+		 var $out="";
+		 var date;
+		 var date_str="";
+		 var time_str="";
+		 var $cpu_chg="val_nochg";
+		 var $mem_chg="val_nochg";
+		 var $cpu_chg_val="";
+		 var $mem_chg_val="";
+		 var $data=null;
+
+		 $data = $(xml).find("data");
+		 $data.find("row").each(function()
+		 {
+			$row = $(this);
+			$cpu_chg_val=$row.find("CTL").text();
+			$mem_chg_val=$row.find("MTL").text();
+
+			if($cpu_chg_val > 0)
+			{
+				$cpu_chg = "val_th"+$cpu_chg_val;
+			}
+			if($mem_chg_val > 0)
+			{
+				$mem_chg = "val_th"+$mem_chg_val;
+			}
+
+/*
+			$ltp_chg_val=$row.find("LTP_Chg").text();
+			$buy_chg_val=$row.find("Buy_Price_Chg").text();
+			$sell_chg_val=$row.find("Sell_Price_Chg").text();
+
+			if( $ltp_chg_val == 1)
+			{
+				$ltp_chg = "val_up";
+			}
+			else if($ltp_chg_val == -1)
+			{
+				$ltp_chg = "val_down";
+			}
+			else
+			{
+				$ltp_chg = "val_nochg";
+			}
+			
+			if( $buy_chg_val == 1)
+			{
+				$buy_chg = "val_up";
+			}
+			else if($buy_chg_val == -1)
+			{
+				$buy_chg = "val_down";
+			}
+			else
+			{
+				$buy_chg = "val_nochg";
+			}
+			
+			if( $sell_chg_val == 1)
+			{
+				$sell_chg = "val_up";
+			}
+			else if($sell_chg_val == -1)
+			{
+				$sell_chg = "val_down";
+			}	
+			else
+			{
+				$sell_chg = "val_nochg";
+			}
+*/
+			if($.mobile.activePage.attr('id')=="pg2")
+			{
+					$out+="<div class='ui-grid-z' data-theme='c' onclick='showFrontLayer(event,\""+$row.find("Ser").text()+"\");'>";
+					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_nochg2' align='left'><b>"+$row.find("Ser").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-b'><div class='topleftedge'><div class='"+$cpu_chg+"' align='right'><b>"+$row.find("CPU").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-c'><div class='topleftedge'><div class='"+$mem_chg+"' align='right'><b>"+$row.find("Mem").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-d'><div class='topleftedge'><div class='val_nochg2' align='leftt'><b>"+$row.find("Typ").text()+"</b></div></div></div>";	
+					$out+="<div class='ui-block-e'><div class='topleftedge'><div class='val_nochg2' align='right'><b>"+$row.find("LUT").text()+"</b></div></div></div>"; 
+					$out+="</a></div>";	
+			}
+			
+		 });
+
+		if($.mobile.activePage.attr('id')=="pg2")
+		{
+			$out+="<div class='ui-grid-z' data-theme='c'>";
+			$out+="<div class='ui-block-a'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-b'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-c'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-d'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-e'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>";			
+			$out+="</div>";	
+			
+			$("#output2").html($out);
+			date = $(xml).find("as_on").text();
+			$("#dt2").html(""+date.substring(0,12)+"<br>"+date.substring(14,22));
+		}
+		else
+		{
+			$("#output").html($out);
+			date = $(xml).find("as_on").text();
+			$("#dt").html(""+date.substring(0,12)+"<br>"+date.substring(14,22));
+		 }
+		 $xml=null;
+
+		 clearTimeout(timeout);
+		 timeout=setTimeout(function() {getData();return;}, 1000);
+	}
+
+	function showFrontLayer(event,symbol) {
+
+		 /*Initialize Market Depth to 0*/
+		 var mdarr1=null;
+		 var mddata1=null;
+		 var pid=null;
+		 var qid=null;
+		 var str="";
+		 var pgid=1;
+		 var dummy_data = "0,0,,,1|0,0,,,2|0,0,,,3|0,0,,,4|0,0,,,5|1,0,,,1|1,0,,,2|1,0,,,3|1,0,,,4|1,0,,,5|" ;
+		 mdarr1 = dummy_data.split('|');
+
+		 if($.mobile.activePage.attr('id')=="pg1")
+		 {
+			document.getElementById('md_comd_1').innerHTML= "<b></b><br>&nbsp;";
+			pgid=1;
+		 }
+		 if($.mobile.activePage.attr('id')=="pg2")
+		 {
+		   document.getElementById('md_comd_2').innerHTML= "<b></b><br>&nbsp;";
+		   pgid=2;
+		 }
+
+		 for (var i = 0; i < mdarr1.length; i++)
+		 {
+			mddata1=null;
+			mddata1 = mdarr1[i].split(',');
+			pid="md_"+pgid+"_p_"+mddata1[0]+"_"+mddata1[4];
+			qid="md_"+pgid+"_q_"+mddata1[0]+"_"+mddata1[4];
+			if(document.getElementById(pid))
+			{
+			  prc=parseFloat((mddata1[1]/1),8).toFixed(2);  //Divide by 1: It helps to print balnk if data is not avialble.  
+			  if(prc==0)
+			  {
+			   document.getElementById(pid).innerHTML= "<br>&nbsp;";
+			  }
+			  else
+			  {
+				document.getElementById(pid).innerHTML= ""+prc+"<br>&nbsp;";
+			   }
+			}
+			if(document.getElementById(qid))
+			{
+			  
+			  str=""+mddata1[2];
+			  if(str!="")
+			  {
+				document.getElementById(qid).innerHTML= ""+mddata1[2]+" ("+mddata1[3]+")<br>&nbsp;";
+			  }
+			  else
+			  {
+				document.getElementById(qid).innerHTML= "<br>&nbsp;";
+			  }
+			}
+		 }
+
+		/*Now fetch data*/
+		getMDData(symbol);
+	}
+
+	function getMDData(symbol)
+	{
+		u_addr="";
+		u_addr = url_addr2+"&symbol="+symbol;
+		$.ajax({
+		 type: "GET",
+		 url: u_addr,
+		 cache: "false",
+		 dataType: "xml",		
+		 success: parseXml2
+		});
+	}
+
+	function parseXml2(xml)
+	{
+		 var mdarr=null;
+		 var mdsymbol=null;
+		 var mddata=null;
+		 var pid=null;
+		 var qid=null;
+		 var str="";
+		 var pgid=1;
+		 mdsymbol = $(xml).find("symbol").text();
+		 mdarr = ($(xml).find("data").text()).split('|');
+
+		 if($.mobile.activePage.attr('id')=="pg1")
+		 {
+			document.getElementById('md_comd_1').innerHTML= "<b>"+mdsymbol+"</b><br>&nbsp;";
+			pgid=1;
+		 }
+		 if($.mobile.activePage.attr('id')=="pg2")
+		 {
+		   document.getElementById('md_comd_2').innerHTML= "<b>"+mdsymbol+"</b><br>&nbsp;";
+		   pgid=2;
+		 }
+
+		 for (var i = 0; i < mdarr.length; i++)
+		 {
+			mddata=null;
+			mddata = mdarr[i].split(',');
+			pid="md_"+pgid+"_p_"+mddata[0]+"_"+mddata[4];
+			qid="md_"+pgid+"_q_"+mddata[0]+"_"+mddata[4];
+			if(document.getElementById(pid))
+			{
+			  prc=parseFloat((mddata[1]/1),8).toFixed(2);  //Divide by 1: It helps to print balnk if data is not avialble.  
+			  if(prc==0)
+			  {
+			   document.getElementById(pid).innerHTML= "<br>&nbsp;";
+			  }
+			  else
+			  {
+				document.getElementById(pid).innerHTML= ""+prc+"<br>&nbsp;";
+			   }
+			}
+			if(document.getElementById(qid))
+			{
+			  
+			  str=""+mddata[2];
+			  if(str!="")
+			  {
+				document.getElementById(qid).innerHTML= ""+mddata[2]+" ("+mddata[3]+")<br>&nbsp;";
+			  }
+			  else
+			  {
+				document.getElementById(qid).innerHTML= "<br>&nbsp;";
+			  }
+			}
+		 }
+		clearTimeout(mdtimeout);
+		//Set Timer only if Popup is Open
+		if($(".ui-page-active .ui-popup-active").length > 0) 
+		{
+			mdtimeout=setTimeout(function() {getMDData(mdsymbol);return;}, 2000);	
+		}
+		else
+		{
+			if($.mobile.activePage.attr('id')=="pg1")
+			{
+				$("#mdlayer1").popup( "open", {positionTo: "window"} );
+			}
+			if($.mobile.activePage.attr('id')=="pg2")
+			{
+				$("#mdlayer2").popup( "open", {positionTo: "window"} );
+			}
+		}
+	}
+
+	//-->
+	</script>
+
+</head>
+
+<body> 
+
+<div data-role="page" data-theme="c" id="pg2">
+	<div data-role="header" data-position="fixed" data-theme="c">
+		<div data-role="header" data-theme="z">		 
+			<div id="dt2" class="ui-btn-left"></div><h2><b>Ace Monitoring system</b></h2><br>&nbsp;<a href="#" onClick="showFV()" data-theme="a" class="ui-btn-right">Full View</a>
+		</div>
+		<div data-role="header" class="ui-grid-z6" data-theme="c">
+			<div class="ui-block-a"><a class="pglink" href='#' onClick='Javascript:sortdata_c2()'><div class="pglink" align='left'><img id='csrt2'>&nbsp;<b>Server</b></div></a></div>
+			<div class="ui-block-b"><div align='center'><b>CPU</b><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center'><b>Memory</b><br>&nbsp;</div></div>
+			<div class="ui-block-d"><a class="pglink" href='#' onClick='Javascript:sortdata_l2()'><div class="pglink" align='center'><img id='lsrt2'>&nbsp;<b>Type</b><br>&nbsp;</div></a></div>
+			<div class="ui-block-e"><a class="pglink" href='#' onClick='Javascript:sortdata_g2()'><div class="pglink" align='center'><img id='gsrt2'>&nbsp;<b>Last Updated</b>&nbsp;<br></div></a></div>			
+		</div>
+	</div><!--header-->
+
+	<div data-role="content">
+		<div id="output2"></div>
+	</div><!--content-->
+
+	<div data-role="popup" data-theme="c" id="mdlayer2" class="frontlayer">
+		<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right" onClick="clearTimeout(mdtimeout);">Close</a>
+		<div class="alledge_h"><center>
+		<div data-role="header" data-theme="c" class="ui-grid-solo" >		 
+			<div class="ui-block-solo"><div class='no_edge' id="md_comd_2"><br>&nbsp;</div></div>
+		</div></center>
+		</div>
+		<div data-role="header" class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge3'>Bid Qty<br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge3'>Bid Prc<br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge3'>Ask Prc<br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge3'>Ask Qty<br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_2_q_0_1" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_2_p_0_1" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_2_p_1_1" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_2_q_1_1" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_2_q_0_2" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_2_p_0_2" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_2_p_1_2" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_2_q_1_2" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_2_q_0_3" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_2_p_0_3" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_2_p_1_3" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_2_q_1_3" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_2_q_0_4" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_2_p_0_4" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_2_p_1_4" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_2_q_1_4" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftbottomedge' id="md_2_q_0_5" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftbottomedge' id="md_2_p_0_5" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftbottomedge' id="md_2_p_1_5" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='alledge' id="md_2_q_1_5" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+	</div>
+
+</div><!--page-->
+
+<div data-role="page"  data-theme="c" id="pg1">
+	<div data-role="header" data-position="fixed" data-theme="c">
+		<div data-role="header" data-theme="z">		 
+			<div id="dt" class="ui-btn-left"></div> <h2><b>Ace Watch</b><br>&nbsp;</h2><a href="#" onClick="showQV()" data-theme="a" class="ui-btn-right">Quick View</a>
+		</div>
+		<div data-role="header" class="ui-grid-z6" data-theme="c">
+			<div class="ui-block-a"><a class="pglink" href='#' onClick='Javascript:sortdata_c()'><div class="pglink" align='left'><img id='csrt'>&nbsp;<b>Symbol</b></div><div class="pglink" align='left'><img id='esrt'>&nbsp;Exp Date</div></a></div>
+			<div class="ui-block-b"><a class="pglink" href='#' onClick='Javascript:sortdata_l()'><div class="pglink" align='right'><b>LTP</b>&nbsp;<img id='lsrt'></div><div class="pglink" align='right'>%Chg&nbsp;<img id='gsrt'></div></a></div>
+			<div class="ui-block-c"><div align='right'><b>Bid</b><div align='right'>Ask</div></div></div>
+			<div class="ui-block-d"><div align='right'><b>High</b><div align='right'>Low</div></div></div>
+			<div class="ui-block-e"><a class="pglink" href='#' onClick='Javascript:sortdata_v()'><div class="pglink" align='right'><b>Vol</b>&nbsp;<img id='vsrt'></div><div class="pglink" align='right'>OI&nbsp;<img id='osrt'></div></a></div>
+		</div>
+	</div><!--header-->
+
+	<div data-role="content" >
+		<div id="output"></div>
+	</div><!--content-->
+
+
+	<div data-role="popup" data-theme="c" id="mdlayer1" class="frontlayer">
+		<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right" onClick="clearTimeout(mdtimeout);">Close</a>
+		<div class="alledge_h"><center>
+		<div data-role="header" data-theme="c" class="ui-grid-solo" >		 
+			<div class="ui-block-solo"><div class='no_edge' id="md_comd_1"><br>&nbsp;</div></div>
+		</div></center>
+		</div>
+		<div data-role="header" class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge3'>Bid Qty<br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge3'>Bid Prc<br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge3'>Ask Prc<br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge3'>Ask Qty<br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_1_q_0_1" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_1_p_0_1" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_1_p_1_1" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_1_q_1_1" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_1_q_0_2" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_1_p_0_2" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_1_p_1_2" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_1_q_1_2" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_1_q_0_3" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_1_p_0_3" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_1_p_1_3" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_1_q_1_3" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftedge2' id="md_1_q_0_4" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftedge2' id="md_1_p_0_4" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftedge2' id="md_1_p_1_4" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='topleftrightedge' id="md_1_q_1_4" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+		<div class="ui-grid-c" data-theme="c">
+			<div class="ui-block-a"><div align='center' class='topleftbottomedge' id="md_1_q_0_5" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-b"><div align='center' class='topleftbottomedge' id="md_1_p_0_5" style="color:#1166FF;"><br>&nbsp;</div></div>
+			<div class="ui-block-c"><div align='center' class='topleftbottomedge' id="md_1_p_1_5" style="color:#FF1111;"><br>&nbsp;</div></div>
+			<div class="ui-block-d"><div align='center' class='alledge' id="md_1_q_1_5" style="color:#FF1111;"><br>&nbsp;</div></div>
+		</div>
+	</div>
+
+</div><!--page-->
+</body>
+</html>
+
+

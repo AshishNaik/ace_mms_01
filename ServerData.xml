@@ -1,0 +1,64 @@
+<xml>
+<title>server data</title>
+<as_on>Jan 08, 2015  1:30 PM</as_on>
+<heading>
+	<label>Server</label>
+	<label>Type</label>
+	<label>CPU</label>
+	<label>Memory</label>
+	<label>Disk</label>
+	<label>Last Updated Time</label>
+</heading>
+<data>
+	<row>
+		<Ser>aceprdcmg01</Ser>
+		<Typ>Trading</Typ>
+		<CPU>18.5</CPU>
+		<Mem>35</Mem>
+		<Dsk>root 25</Dsk>
+		<LUT>13:25</LUT>
+		<CTL>0</CTL>
+		<MTL>0</MTL>
+	</row>
+	<row>
+		<Ser>aceprdcme01</Ser>
+		<Typ>Trading</Typ>
+		<CPU>8.5</CPU>
+		<Mem>15</Mem>
+		<Dsk>root 55</Dsk>
+		<LUT>13:25</LUT>
+		<CTL>0</CTL>
+		<MTL>0</MTL>
+	</row>
+	<row>
+		<Ser>aceprdcdb01</Ser>
+		<Typ>Trading DB</Typ>
+		<CPU>52</CPU>
+		<Mem>82</Mem>
+		<Dsk>root 48</Dsk>
+		<LUT>13:25</LUT>
+		<CTL>0</CTL>
+		<MTL>2</MTL>
+	</row>
+	<row>
+		<Ser>acelinportal01</Ser>
+		<Typ>Portal</Typ>
+		<CPU>63</CPU>
+		<Mem>92</Mem>
+		<Dsk>root 48</Dsk>
+		<LUT>13:25</LUT>
+		<CTL>1</CTL>
+		<MTL>3</MTL>
+	</row>
+	<row>
+		<Ser>aceuatcs04</Ser>
+		<Typ>UAT</Typ>
+		<CPU>0</CPU>
+		<Mem>0</Mem>
+		<Dsk>root 48</Dsk>
+		<LUT>12:20</LUT>
+		<CTL>9</CTL>
+		<MTL>9</MTL>
+	</row>
+</data>
+</xml> 

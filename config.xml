@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns		= "http://www.w3.org/ns/widgets"
+	xmlns:gap	= "http://phonegap.com/ns/2.9"
+	id		= "com.phonegap.ace.acemms"
+	versionCode = "500" 
+	version 	= "1.0.0">
+
+	<name>Ace Monitoring System</name>
+
+	<description>
+		Ace Exchange Monitoring System
+	</description>
+
+	<author href="http://www.aceindia.com"
+		email="services@aceindia.com">
+		Ace Commodity Exchange Ltd.
+	</author>
+
+	<icon src="Ace_a1.jpg" gap:role="default" />
+	<feature name="http://api.phonegap.com/1.0/network"/>
+	<access origin="*" />
+</widget>
