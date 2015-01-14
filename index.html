@@ -9,10 +9,10 @@
 	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" /> 
 	<meta http-equiv="pragma" content="no-cache" /> 
 	
-	<link rel="stylesheet" href="assets/css/jquery.mobile-1.4.2.css" />
+	<link rel="stylesheet" href="./assets/css/jquery.mobile-1.4.2.css" />
 
-	<script src="assets/js/jquery-1.10.2.min.js"></script>
-	<script src="assets/js/jquery.mobile-1.4.2.min.js"></script>
+	<script src="./assets/js/jquery-1.10.2.min.js"></script>
+	<script src="./assets/js/jquery.mobile-1.4.5.js"></script>
 
 <!--
 	<script src="assets/js/jquery-2.1.3.min.js"></script>
@@ -22,7 +22,8 @@
 	<!--
 	var timeout=null;
 	var mdtimeout=null;
-	var	url_addr="./ServerData.xml?";
+	var	url_addr="http://www1.aceindia.com/interface/datawriter.php?";
+	//var	url_addr="./ServerData.xml?";
 	//var	url_addr2="file:///D:/workspace/AMS/MD.xml?";
 	//var	url_addr="http://www.aceindia.com/charts/ServerData.xml";
 	//var	url_addr2="http://www.aceindia.com/interface/fastlistener/market_depth.php?of=1";//&symbol=COTTON11818APR14";
@@ -310,8 +311,12 @@
 				$mem_chg = "val_th"+$mem_chg_val;
 			}
 
+
+
 			if($.mobile.activePage.attr('id')=="pg2")
 			{
+				if($row.find("Sts").text()=="Up")
+				{
 					$out+="<div class='ui-grid-z' data-theme='c'>";
 					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_nochg2' align='left'><b>"+$row.find("Ser").text()+"</b></div></div></div>"; 
 					$out+="<div class='ui-block-b'><div class='topleftedge'><div class='"+$cpu_chg+"' align='right'><b>"+$row.find("CPU").text()+"</b></div></div></div>"; 
@@ -319,8 +324,18 @@
 					$out+="<div class='ui-block-d'><div class='topleftedge'><div class='val_nochg2' align='leftt'><b>"+$row.find("Typ").text()+"</b></div></div></div>";	
 					$out+="<div class='ui-block-e'><div class='topleftedge'><div class='val_nochg2' align='right'><b>"+$row.find("LUT").text()+"</b></div></div></div>"; 
 					$out+="</div>";	
-			}
-			
+				}
+				else
+				{
+					$out+="<div class='ui-grid-z' data-theme='c'>";
+					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_th9' align='left'><b>"+$row.find("Ser").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-b'><div class='topleftedge'><div class='val_th9' align='right'><b>0</b></div></div></div>"; 
+					$out+="<div class='ui-block-c'><div class='topleftedge'><div class='val_th9' align='right'><b>0</b></div></div></div>"; 
+					$out+="<div class='ui-block-d'><div class='topleftedge'><div class='val_th9' align='leftt'><b>"+$row.find("Typ").text()+"</b></div></div></div>";	
+					$out+="<div class='ui-block-e'><div class='topleftedge'><div class='val_th9' align='right'><b>"+$row.find("LUT").text()+"</b></div></div></div>"; 
+					$out+="</div>";	
+				}
+			}			
 		 });
 
 		if($.mobile.activePage.attr('id')=="pg2")
