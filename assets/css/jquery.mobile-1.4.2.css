@@ -4725,7 +4725,6 @@ hr{width:99%;}
 .ui-grid-z6 .ui-block-a, .ui-grid-z6 .ui-block-b, .ui-grid-z6 .ui-block-c, .ui-grid-z6 .ui-block-d, .ui-grid-z6 .ui-block-e { width: 35%;width: 20%;width: 10%;width: 20%;width: 20%;  }
 .ui-grid-z6 .ui-block-a { clear: left; }
 
-
 .ui-bar-z {
 	border: 1px solid 		#333 /*{a-bar-border}*/;
 	background: 			#111111 /*{a-bar-background-color}*/;
@@ -4773,10 +4772,11 @@ a{text-decoration: none;}
 .val_down2 {color:#FFFFFF;background-color:#FF1111;}
 .val_nochg2 {color:#000000;background-color:#F7F7F7;}
 
-.val_th1 {color:#000000;background-color:#FFCCCC;}
-.val_th2 {color:#000000;background-color:#FFFF00;}
-.val_th3 {color:#000000;background-color:#FF9900;}
-.val_th9 {color:#FFFFFF;background-color:#FF1111;}
+.val_th1 {color:#000000;background-color:#FFFFFF;}
+.val_th2 {color:#000000;background-color:#F6EB3A;}
+.val_th3 {color:#FFFFFF;background-color:#F35F3D;}
+.val_th9 {color:#FFFFFF;background-color:#E11E14;}
+
 
 .topedge {
 	border-color: #000000;
