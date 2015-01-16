@@ -10,23 +10,14 @@
 	<meta http-equiv="pragma" content="no-cache" /> 
 	
 	<link rel="stylesheet" href="./assets/css/jquery.mobile-1.4.2.css" />
-
 	<script src="./assets/js/jquery-1.10.2.min.js"></script>
 	<script src="./assets/js/jquery.mobile-1.4.2.min.js"></script>
-
-<!--
-	<script src="assets/js/jquery-2.1.3.min.js"></script>
-	<script src="assets/js/jquery.mobile-1.4.5.min.js"></script>
--->
 	<script>
 	<!--
 	var timeout=null;
 	var mdtimeout=null;
 	var	url_addr="http://www1.aceindia.com/interface/datawriter.php?";
 	//var	url_addr="./ServerData.xml?";
-	//var	url_addr2="file:///D:/workspace/AMS/MD.xml?";
-	//var	url_addr="http://www.aceindia.com/charts/ServerData.xml";
-	//var	url_addr2="http://www.aceindia.com/interface/fastlistener/market_depth.php?of=1";//&symbol=COTTON11818APR14";
 	var	sortid=15;//Deafult Volume Desc
 	var sortid2=5;//Default Volume Desc
 	var prvdt;
@@ -46,6 +37,8 @@
 		$("#lsrt2").attr("src", "assets/img/down.png");
 		$("#csrt2").attr("src", "assets/img/blk.png");
 		$("#gsrt2").attr("src", "assets/img/blk.png");
+
+		$("#dwn").attr("src", "assets/img/downr1.png");
 
 		t=setTimeout(function() {getDataS();return;}, 500);
 
@@ -329,10 +322,10 @@
 				{
 					$out+="<div class='ui-grid-z' data-theme='c'>";
 					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_th9' align='left'><b>"+$row.find("Ser").text()+"</b></div></div></div>"; 
-					$out+="<div class='ui-block-b'><div class='topleftedge'><div class='val_th9' align='right'><b>0</b></div></div></div>"; 
-					$out+="<div class='ui-block-c'><div class='topleftedge'><div class='val_th9' align='right'><b>0</b></div></div></div>"; 
-					$out+="<div class='ui-block-d'><div class='topleftedge'><div class='val_th9' align='leftt'><b>"+$row.find("Typ").text()+"</b></div></div></div>";	
-					$out+="<div class='ui-block-e'><div class='topleftedge'><div class='val_th9' align='right'><b>"+$row.find("LUT").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-b'><div class='topleftedge'><div align='center'><b>NA</b></div></div></div>"; 
+					$out+="<div class='ui-block-c'><div class='topleftedge'><div align='center'><b>NA</b></div></div></div>"; 
+					$out+="<div class='ui-block-d'><div class='topleftedge'><div align='leftt'><b>"+$row.find("Typ").text()+"</b></div></div></div>";	
+					$out+="<div class='ui-block-e'><div class='topleftedge'><div align='right'><b>"+$row.find("LUT").text()+"</b></div></div></div>"; 
 					$out+="</div>";	
 				}
 			}			
@@ -350,7 +343,7 @@
 			
 			$("#output2").html($out);
 			date = $(xml).find("as_on").text();
-			$("#dt2").html(""+date.substring(0,12)+"<br>"+date.substring(14,22));
+			$("#dt2").html(""+date);
 		}
 		else
 		{
@@ -376,7 +369,7 @@
 <div data-role="page" data-theme="c" id="pg2">
 	<div data-role="header" data-position="fixed" data-theme="c">
 		<div data-role="header" data-theme="z">		 
-			<div id="dt2" class="ui-btn-left"></div><h2><b>Ace Monitoring system</b></h2><br>&nbsp;</div>
+			<div id="dt2" class="ui-btn-left"></div><h2><b>Ace Monitoring system</b></h2></div>
 		<div data-role="header" class="ui-grid-z6" data-theme="c">
 			<div class="ui-block-a"><a class="pglink" href='#' onClick='Javascript:sortdata_c2()'><div class="pglink" align='left'><img id='csrt2'>&nbsp;<b>Server</b></div></a></div>
 			<div class="ui-block-b"><div align='center'><b>CPU</b><br>&nbsp;</div></div>
