@@ -4884,6 +4884,7 @@ a{text-decoration: none;}
 	color: #000000;
 	vertical-align: middle;
 	padding: 3px;
+	vertical-align: center;
 }
 .frontlayer {
 	background-image: linear-gradient( #f0f0f0 , #ddd);
@@ -4895,9 +4896,34 @@ a{text-decoration: none;}
 	border-style:groove;
 }
 
+.upsrv
+{
+	background-image: url(http://www1.aceindia.com/interface/AMS/assets/img/server.jpg);
+	background-repeat: no-repeat;
+	height: 98px;
+	width: 111px;
+	horizontal-align:center;
+	font-family: Arial;
+	font-size: 10px;
+}
+
+.downsrv
+{
+	background-image: url(http://www1.aceindia.com/interface/AMS/assets/img/serverd.jpg);
+	background-repeat: no-repeat;
+	height: 98px;
+	width: 111px;
+	align:center;
+	font-family: Arial;
+	font-size: 10px;
+}
+
+
+
 .pglink 
 { 		
 	text-decoration:none; 
 	color:#000000; 
 };
+
 
