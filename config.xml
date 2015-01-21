@@ -2,13 +2,13 @@
 <widget xmlns		= "http://www.w3.org/ns/widgets"
 	xmlns:gap	= "http://phonegap.com/ns/2.9"
 	id		= "com.phonegap.ace.acemms"
-	versionCode = "508" 
-	version 	= "1.0.8">
+	versionCode = "509" 
+	version 	= "1.0.9">
 
-	<name>Ace Monitoring System</name>
+	<name>Ace Monitoring Sys</name>
 
 	<description>
-		Ace Monitoring System.
+		Ace Monitoring Sys
 	</description>
 
 	<author href="http://www.aceindia.com"
