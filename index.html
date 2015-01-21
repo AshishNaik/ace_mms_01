@@ -34,7 +34,7 @@
 		$("#osrt").attr("src", "assets/img/blk.png");
 
 		$("#esrt2").attr("src", "assets/img/blk.png");
-		$("#lsrt2").attr("src", "assets/img/down.png");
+		$("#lsrt2").attr("src", "assets/img/blk.png");
 		$("#csrt2").attr("src", "assets/img/blk.png");
 		$("#gsrt2").attr("src", "assets/img/blk.png");
 
@@ -242,6 +242,7 @@
 		{
 			sortid=sortid2;
 		}
+
 		u_addr = url_addr+"&SO="+sortid;
 
 		$.ajax({
@@ -257,13 +258,29 @@
 	}
 
 	function getData()
-	{	
+	{
 		u_addr="";
 		if($.mobile.activePage.attr('id')=="pg2")
 		{
 			sortid=sortid2;
 		}
-		u_addr = url_addr+"&SO="+sortid;
+		var e1 = document.getElementById("seltyp1");
+		var selval1 = e1.options[e1.selectedIndex].value;
+		var e2 = document.getElementById("seltyp2");
+		var selval2 = e2.options[e2.selectedIndex].value;
+		
+		var qrystr1="";
+		if(selval1!="All")
+		{
+		  qrystr1="Typ="+selval1;
+		}
+		var qrystr2="";
+		if(selval2!="All")
+		{
+		  qrystr2="OS="+selval2;
+		}
+		u_addr = url_addr+"&"+qrystr1+"&"+qrystr2;
+		//alert(""+u_addr);
 
 		$.ajax({
 		 type: "GET",
@@ -274,6 +291,17 @@
 		});
 	}
 
+	function showLV()
+	{
+		$.mobile.changePage( "#pg1", { transition: "slide"} );		
+		t=setTimeout(function() {getData();return;}, 100);
+	}
+
+	function showGV()
+	{
+		$.mobile.changePage( "#pg2", { transition: "slide"} );
+		t=setTimeout(function() {getData();return;}, 100);
+	}
 
 	function parseXml(xml)
 	{
@@ -289,47 +317,125 @@
 		 var $data=null;
 
 		 $data = $(xml).find("data");
+		 var $row_arr=[];
 		 $data.find("row").each(function()
 		 {
-			$row = $(this);
-			$cpu_chg_val=$row.find("CTL").text();
-			$mem_chg_val=$row.find("MTL").text();
-
-			if($cpu_chg_val > 0)
-			{
-				$cpu_chg = "val_th"+$cpu_chg_val;
-			}
-			if($mem_chg_val > 0)
-			{
-				$mem_chg = "val_th"+$mem_chg_val;
-			}
-
-
-
+			$row_arr[$row_arr.length] = $(this);
+		 });
+		 $out="";
+		 for(var index = 0; index < $row_arr.length; ) {			
+			$out+="<div class='ui-grid-z' data-theme='c'>";			
 			if($.mobile.activePage.attr('id')=="pg2")
+			{				
+				if($row_arr[index+0]!=null)
+				{
+					$out+="<div class='ui-block-a'><div class='no_edge'><div class='";
+					if(($row_arr[index+0].find("Sts").text())=="Up")
+					{
+						$out+="upsrv";
+					}
+					else
+					{
+						$out+="downsrv";
+					}					$out+="'><br>&nbsp;&nbsp;&nbsp;<b>"+$row_arr[index+0].find("Ser").text()+"</b><br>&nbsp;&nbsp;&nbsp;CPU:"+$row_arr[index+0].find("CPU").text()+"<br>&nbsp;&nbsp;&nbsp;Mem:"+$row_arr[index+0].find("Mem").text()+"<br>&nbsp;&nbsp;&nbsp;"+$row_arr[index+0].find("Dsk").text()+"</div></div></div>"; 
+					
+				}
+				if($row_arr[index+1]!=null)
+				{
+					$out+="<div class='ui-block-b'><div class='no_edge'><div class='";
+					if(($row_arr[index+1].find("Sts").text())=="Up")
+					{
+						$out+="upsrv";
+					}
+					else
+					{
+						$out+="downsrv";
+					}
+					$out+="'><br>&nbsp;&nbsp;&nbsp;<b>"+$row_arr[index+1].find("Ser").text()+"</b><br>&nbsp;&nbsp;&nbsp;CPU:"+$row_arr[index+1].find("CPU").text()+"<br>&nbsp;&nbsp;&nbsp;Mem:"+$row_arr[index+1].find("Mem").text()+"<br>&nbsp;&nbsp;&nbsp;"+$row_arr[index+1].find("Dsk").text()+"</div></div></div>"; 
+				}
+				if($row_arr[index+2]!=null)
+				{
+					$out+="<div class='ui-block-c'><div class='no_edge'><div class='";
+					if(($row_arr[index+2].find("Sts").text())=="Up")
+					{
+						$out+="upsrv";
+					}
+					else
+					{
+						$out+="downsrv";
+					}					$out+="'><br>&nbsp;&nbsp;&nbsp;<b>"+$row_arr[index+2].find("Ser").text()+"</b><br>&nbsp;&nbsp;&nbsp;CPU:"+$row_arr[index+2].find("CPU").text()+"<br>&nbsp;&nbsp;&nbsp;Mem:"+$row_arr[index+2].find("Mem").text()+"<br>&nbsp;&nbsp;&nbsp;"+$row_arr[index+2].find("Dsk").text()+"</div></div></div>"; 
+				}
+				if($row_arr[index+3]!=null)
+				{
+					$out+="<div class='ui-block-d'><div class='no_edge'><div class='";
+					if(($row_arr[index+3].find("Sts").text())=="Up")
+					{
+						$out+="upsrv";
+					}
+					else
+					{
+						$out+="downsrv";
+					}
+					$out+="'><br>&nbsp;&nbsp;&nbsp;<b>"+$row_arr[index+3].find("Ser").text()+"</b><br>&nbsp;&nbsp;&nbsp;CPU:"+$row_arr[index+3].find("CPU").text()+"<br>&nbsp;&nbsp;&nbsp;Mem:"+$row_arr[index+3].find("Mem").text()+"<br>&nbsp;&nbsp;&nbsp;"+$row_arr[index+3].find("Dsk").text()+"</div></div></div>"; 
+				}
+				if($row_arr[index+4]!=null)
+				{
+					$out+="<div class='ui-block-e'><div class='no_edge'><div class='";
+					if(($row_arr[index+4].find("Sts").text())=="Up")
+					{
+						$out+="upsrv";
+					}
+					else
+					{
+						$out+="downsrv";
+					}					$out+="'><br>&nbsp;&nbsp;&nbsp;<b>"+$row_arr[index+4].find("Ser").text()+"</b><br>&nbsp;&nbsp;&nbsp;CPU:"+$row_arr[index+4].find("CPU").text()+"<br>&nbsp;&nbsp;&nbsp;Mem:"+$row_arr[index+4].find("Mem").text()+"<br>&nbsp;&nbsp;&nbsp;"+$row_arr[index+4].find("Dsk").text()+"</div></div></div>"; 
+				}
+				index=index+5;			
+			}
+			
+			else if($.mobile.activePage.attr('id')=="pg1")
 			{
-				if($row.find("Sts").text()=="Up")
+				$row = $(this);
+				$cpu_chg_val=$row_arr[index].find("CTL").text();
+				$mem_chg_val=$row_arr[index].find("MTL").text();
+
+				if($cpu_chg_val > 0)
+				{
+					$cpu_chg = "val_th"+$cpu_chg_val;
+				}
+				if($mem_chg_val > 0)
+				{
+					$mem_chg = "val_th"+$mem_chg_val;
+				}
+				if($row_arr[index].find("Sts").text()=="Up")
 				{
 					$out+="<div class='ui-grid-z' data-theme='c'>";
-					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_nochg2' align='left'><b>"+$row.find("Ser").text()+"</b></div></div></div>"; 
-					$out+="<div class='ui-block-b'><div class='topleftedge'><div class='"+$cpu_chg+"' align='right'><b>"+$row.find("CPU").text()+"</b></div></div></div>"; 
-					$out+="<div class='ui-block-c'><div class='topleftedge'><div class='"+$mem_chg+"' align='right'><b>"+$row.find("Mem").text()+"</b></div></div></div>"; 
-					$out+="<div class='ui-block-d'><div class='topleftedge'><div class='val_nochg2' align='leftt'><b>"+$row.find("Typ").text()+"</b></div></div></div>";	
-					$out+="<div class='ui-block-e'><div class='topleftedge'><div class='val_nochg2' align='right'><b>"+$row.find("LUT").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_nochg2' align='left'><b>"+$row_arr[index].find("Ser").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-b'><div class='topleftedge'><div class='"+$cpu_chg+"' align='right'><b>"+$row_arr[index].find("CPU").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-c'><div class='topleftedge'><div class='"+$mem_chg+"' align='right'><b>"+$row_arr[index].find("Mem").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-d'><div class='topleftedge'><div class='val_nochg2' align='leftt'><b>"+$row_arr[index].find("Typ").text()+"</b></div></div></div>";	
+					$out+="<div class='ui-block-e'><div class='topleftedge'><div class='val_nochg2' align='right'><b>"+$row_arr[index].find("LUT").text()+"</b></div></div></div>"; 
 					$out+="</div>";	
 				}
 				else
-				{
+				{					
 					$out+="<div class='ui-grid-z' data-theme='c'>";
-					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_th9' align='left'><b>"+$row.find("Ser").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-a'><div class='topleftedge'><div class='val_th9' align='left'><b>"+$row_arr[index].find("Ser").text()+"</b></div></div></div>"; 
 					$out+="<div class='ui-block-b'><div class='topleftedge'><div align='center'><b>NA</b></div></div></div>"; 
 					$out+="<div class='ui-block-c'><div class='topleftedge'><div align='center'><b>NA</b></div></div></div>"; 
-					$out+="<div class='ui-block-d'><div class='topleftedge'><div align='leftt'><b>"+$row.find("Typ").text()+"</b></div></div></div>";	
-					$out+="<div class='ui-block-e'><div class='topleftedge'><div align='right'><b>"+$row.find("LUT").text()+"</b></div></div></div>"; 
+					$out+="<div class='ui-block-d'><div class='topleftedge'><div align='leftt'><b>"+$row_arr[index].find("Typ").text()+"</b></div></div></div>";	
+					$out+="<div class='ui-block-e'><div class='topleftedge'><div align='right'><b>"+$row_arr[index].find("LUT").text()+"</b></div></div></div>"; 
 					$out+="</div>";	
+					
 				}
-			}			
-		 });
+				index++;
+			}
+			
+			$out+="</div>";	
+		 }
+
+
+		 
 
 		if($.mobile.activePage.attr('id')=="pg2")
 		{
@@ -343,18 +449,27 @@
 			
 			$("#output2").html($out);
 			date = $(xml).find("as_on").text();
+			//alert("dt:"+date);
 			$("#dt2").html(""+date);
+
 		}
-		else
+		else if($.mobile.activePage.attr('id')=="pg1")
 		{
-			$("#output").html($out);
+			$out+="<div class='ui-grid-z' data-theme='c'>";
+			$out+="<div class='ui-block-a'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-b'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-c'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-d'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>"; 
+			$out+="<div class='ui-block-e'><div class='topedge'><div align='right'><b>&nbsp;</b></div></div></div>";			
+			$out+="</div>";	
+			$("#output1").html($out);
 			date = $(xml).find("as_on").text();
-			$("#dt").html(""+date.substring(0,12)+"<br>"+date.substring(14,22));
+			$("#dt").html(""+date);
 		 }
 		 $xml=null;
 
 		 clearTimeout(timeout);
-		 timeout=setTimeout(function() {getData();return;}, 1000);
+		 timeout=setTimeout(function() {getData();return;}, 2000);
 	}
 
 	
@@ -365,12 +480,48 @@
 </head>
 
 <body> 
-
 <div data-role="page" data-theme="c" id="pg2">
+
 	<div data-role="header" data-position="fixed" data-theme="c">
 		<div data-role="header" data-theme="z">		 
-			<div id="dt2" class="ui-btn-left"></div><h2><b>Ace Monitoring system</b></h2></div>
-		<div data-role="header" class="ui-grid-z6" data-theme="c">
+			<div id="dt2" class="ui-btn-left"></div><h2><b>Ace Monitoring system</b></h2><a href="#" onClick="showLV()" data-theme="a" class="ui-btn-right">List View</a></div>
+			<div data-role="header" data-theme="c" align="centre">
+			<div><form>
+				<div style="float:left;vertical-align:middle;"><div>Type:&nbsp;</div></div>
+				<div style="float:left;">
+					<select id="seltyp1" >
+					  <option value="All">All</option>
+					  <option value="Production">PROD</option>
+					  <option value="DR">DR</option>
+					  <option value="UAT">UAT</option>
+					</select>
+				</div>
+				<div style="float:left;"><div>&nbsp;OS:&nbsp;</div></div>
+				<div style="float:left;">
+					<select id="seltyp2">
+					  <option value="All">All</option>
+					  <option value="SOLARIS">SOLARIS</option>
+					  <option value="LINUX">LINUX</option>
+					  <option value="WINDOWS">WINDOWS</option>
+					</select>
+				</div>
+			</form>
+			</div>
+		</div>
+	</div><!--header-->
+
+	<div data-role="content">
+		<div id="output2"></div>
+	</div><!--content-->
+
+</div><!--page-->
+
+
+<div data-role="page" data-theme="c" id="pg1">
+	<div data-role="header" data-position="fixed" data-theme="c">
+		<div data-role="header" data-theme="z">		 
+			<div id="dt2" class="ui-btn-left"></div><h2><b>Ace Monitoring system</b></h2><a href="#" onClick="showGV()" data-theme="a" class="ui-btn-right">Grid View</a></div>
+			<div data-role="header" class="ui-grid-z6" data-theme="c">
 			<div class="ui-block-a"><a class="pglink" href='#' onClick='Javascript:sortdata_c2()'><div class="pglink" align='left'><img id='csrt2'>&nbsp;<b>Server</b></div></a></div>
 			<div class="ui-block-b"><div align='center'><b>CPU</b><br>&nbsp;</div></div>
 			<div class="ui-block-c"><div align='center'><b>Memory</b><br>&nbsp;</div></div>
@@ -380,12 +531,10 @@
 	</div><!--header-->
 
 	<div data-role="content">
-		<div id="output2"></div>
+		<div id="output1"></div>
 	</div><!--content-->
 
-
 </div><!--page-->
-
 </body>
 </html>
 
